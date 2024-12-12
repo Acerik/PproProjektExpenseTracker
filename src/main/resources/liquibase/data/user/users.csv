@@ -1,0 +1,3 @@
+username,password,first_name,last_name,email,created_by,created_at
+system,NULL,System,System,system@system.com,1,CURRENT_TIMESTAMP
+administrator,$2a$12$mTx1koU3yn860miDpTVpDu1ZhHCeLyvx1dXMEA2hmvmJNIBW3gisK,Hlavni,Admin,admin@admin.com,1,CURRENT_TIMESTAMP
