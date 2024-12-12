@@ -20,7 +20,6 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractAuditingEntity implements UserDetails {
 
-    @Getter
     @Column(name = "username")
     private String username;
 
@@ -42,19 +41,21 @@ public class User extends AbstractAuditingEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<UserRole> userRoles;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getValue().toUpperCase()))
                 .toList();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override
