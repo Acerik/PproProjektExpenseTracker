@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @MappedSuperclass
-public abstract class AbstractAuditingEntity {
+public class AbstractAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
