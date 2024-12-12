@@ -27,6 +27,7 @@ public class AuditingListenerImpl implements AuditingListener {
     @Override
     @EventListener
     public void onEvent(AuditEvent<?> event) {
+        log.info("Caught audit event: {}", event);
         auditLogRepository.save(createAuditLog(event));
     }
 

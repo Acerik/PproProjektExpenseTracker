@@ -29,6 +29,15 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+              - column:
+                  name: created_by
+                  type: bigint
+              - column:
+                  name: last_modified_at
+                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+              - column:
+                  name: last_modified_by
+                  type: bigint
 
         - createTable:
             tableName: user_details_role
@@ -45,3 +54,27 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     primaryKey: true
+
+        - createTable:
+            tableName: audit_log
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: created_at
+                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+              - column:
+                  name: created_by
+                  type: bigint
+              - column:
+                  name: audit_log_entity_type
+                  type: varchar(50)
+              - column:
+                  name: audit_log_event_type
+                  type: varchar(50)
+              - column:
+                  name: entity_json
+                  type: varchar(65500)
