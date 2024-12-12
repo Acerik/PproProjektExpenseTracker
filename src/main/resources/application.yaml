@@ -20,4 +20,3 @@ spring:
     contexts: dev,prod
     default-schema: public
     drop-first: false
-    rollback-file: rollback.sql
