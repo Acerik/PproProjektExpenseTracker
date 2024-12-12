@@ -5,20 +5,21 @@ import cz.uhk.pproprojektexpensetracker.auditing.enums.AuditLogEventType;
 import cz.uhk.pproprojektexpensetracker.model.AbstractAuditingEntity;
 import cz.uhk.pproprojektexpensetracker.repository.AbstractRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@RequiredArgsConstructor
 public abstract class AbstractServiceImpl<T extends AbstractAuditingEntity> implements AbstractService<T> {
 
-    private final AbstractRepository<T> repository;
+    @Autowired
+    private AbstractRepository<T> repository;
 
-    private final ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public Optional<T> findOne(Long id) {
