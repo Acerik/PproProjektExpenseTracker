@@ -8,51 +8,55 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
                   name: username
-                  type: varchar(255)
+                  type: ${stringType}
+                  constraints:
+                    unique: true
               - column:
                   name: password
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: email
-                  type: varchar(255)
+                  type: ${stringType}
+                  constraints:
+                    unique: true
               - column:
                   name: first_name
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: last_name
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: last_modified_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: last_modified_by
-                  type: bigint
+                  type: ${longType}
 
         - createTable:
             tableName: user_details_role
             columns:
               - column:
                   name: user_id
-                  type: bigint
+                  type: ${longType}
                   constraints:
                     primaryKey: true
                     foreignKeyName: fk_user_details_role_user_id
                     references: user_details(id)
               - column:
                   name: user_role
-                  type: varchar(255)
+                  type: ${stringType}
                   constraints:
                     primaryKey: true
 
@@ -61,53 +65,56 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
+                  name: entity_id
+                  type: ${longType}
+              - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: audit_log_entity_type
-                  type: varchar(50)
+                  type: ${stringType}
               - column:
                   name: audit_log_event_type
-                  type: varchar(50)
+                  type: ${stringType}
               - column:
                   name: entity_json
-                  type: varchar(65500)
+                  type: ${bigStringType}
 
         - createTable:
             tableName: project
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: last_modified_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: last_modified_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: name
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: user_id
-                  type: bigint
+                  type: ${longType}
                   constraints:
                     foreignKey: true
                     foreignKeyName: fk_project_user_id
@@ -118,28 +125,28 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: last_modified_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: last_modified_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: name
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: user_id
-                  type: bigint
+                  type: ${longType}
                   constraints:
                     foreignKey: true
                     foreignKeyName: fk_transaction_tag_user_id
@@ -149,44 +156,44 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: last_modified_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: last_modified_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: amount
-                  type: double
+                  type: ${doubleType}
               - column:
                   name: date
-                  type: date
+                  type: ${dateType}
               - column:
                   name: description
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: title
-                  type: varchar(255)
+                  type: ${stringType}
               - column:
                   name: project_id
-                  type: bigint
+                  type: ${longType}
                   constraints:
                     foreignKey: true
                     foreignKeyName: fk_transaction_project_id
                     references: project(id)
               - column:
                   name: transaction_tag_id
-                  type: bigint
+                  type: ${longType}
                   constraints:
                     foreignKey: true
                     foreignKeyName: fk_transaction_transaction_tag_id
@@ -197,19 +204,19 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: ${longType}
                   autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
                   name: created_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: created_by
-                  type: bigint
+                  type: ${longType}
               - column:
                   name: last_modified_at
-                  type: java.sql.Types.TIMESTAMP_WITH_TIMEZONE
+                  type: ${zoneDateTimeType}
               - column:
                   name: last_modified_by
-                  type: bigint
+                  type: ${longType}

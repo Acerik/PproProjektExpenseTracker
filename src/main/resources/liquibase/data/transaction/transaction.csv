@@ -1,0 +1,10 @@
+project_id,title,description,amount,date
+1,Nákup materiálu,Pořízení stavebních materiálů pro projekt A,1500.75,2024-12-14
+2,Platba za konzultace,Úhrada za odborné poradenství v rámci projektu B,2500.50,2024-12-13
+3,První etapa výstavby,Zahájení výstavby v rámci projektu C,1200.00,2024-12-12
+1,Údržba zařízení,Pravidelná údržba strojů pro projekt A,300.00,2024-12-11
+2,Reklamní kampaň,Spuštění marketingové kampaně pro projekt B,450.25,2024-12-10
+3,Stavební práce,Pokračování stavebních prací v rámci projektu C,1000.60,2024-12-09
+1,Doprava materiálu,Transport materiálu na staveniště pro projekt A,200.90,2024-12-08
+2,Právní služby,Platba za právní poradenství k projektu B,350.20,2024-12-07
+3,Inspekce objektu,Kontrola kvality výstavby projektu C,400.75,2024-12-06

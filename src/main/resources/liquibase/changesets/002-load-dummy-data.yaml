@@ -51,3 +51,43 @@ databaseChangeLog:
             relativeToChangelogFile: true
             file: ../data/user/user_role.csv
             primaryKey: user_id
+        - loadData:
+            tableName: project
+            columns:
+              - column:
+                  header: user_id
+                  name: user_id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+            relativeToChangelogFile: true
+            file: ../data/project/project.csv
+            primaryKey: id
+        - loadData:
+            tableName: transaction
+            columns:
+              - column:
+                  header: project_id
+                  name: project_id
+                  type: NUMERIC
+              - column:
+                  header: title
+                  name: title
+                  type: STRING
+              - column:
+                  header: description
+                  name: description
+                  type: STRING
+              - column:
+                  header: amount
+                  name: amount
+                  type: double
+              - column:
+                  header: date
+                  name: date
+                  type: date
+            relativeToChangelogFile: true
+            file: ../data/transaction/transaction.csv
+            primaryKey: id
