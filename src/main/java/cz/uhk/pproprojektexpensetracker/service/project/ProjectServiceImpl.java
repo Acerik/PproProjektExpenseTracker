@@ -7,7 +7,10 @@ import cz.uhk.pproprojektexpensetracker.repository.ProjectRepository;
 import cz.uhk.pproprojektexpensetracker.service.AbstractServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,13 +21,7 @@ public class ProjectServiceImpl extends AbstractServiceImpl<Project> implements 
     @Override
     public List<ProjectListItemDto> getProjectsListByUserId(Long userId) {
         return ((ProjectRepository) repository).findAllByUserIdIs(userId).stream()
-                .map(project -> ProjectListItemDto.builder()
-                        .id(project.getId())
-                        .name(project.getName())
-                        .spentAmount(project.getTransactions().stream().mapToDouble(Transaction::getAmount).sum())
-                        .lastTransactionDate(project.getTransactions().getLast().getDate())
-                        .sumOfTransactions((long) project.getTransactions().size())
-                        .build())
+                .map(this::mapProjectListItemDto)
                 .toList();
     }
 
@@ -34,8 +31,26 @@ public class ProjectServiceImpl extends AbstractServiceImpl<Project> implements 
     }
 
     @Override
-    public Project getProjectByIdAndUserId(Long id, Long userId) {
-        return ((ProjectRepository) repository).findByIdAndUserIdIs(id, userId).orElse(null);
+    public ProjectListItemDto getProjectByIdAndUserId(Long id, Long userId) {
+        Project project = ((ProjectRepository) repository).findByIdAndUserIdIs(id, userId)
+                .orElse(null);
+        return project != null ? mapProjectListItemDto(project) : null;
+    }
+
+    private ProjectListItemDto mapProjectListItemDto(Project project) {
+        return ProjectListItemDto.builder()
+                .id(project.getId())
+                .name(project.getName())
+                .spentAmount(project.getTransactions().stream().mapToDouble(Transaction::getAmount).sum())
+                .lastTransactionDate(getLastTransactionDate(project.getTransactions()))
+                .sumOfTransactions((long) project.getTransactions().size())
+                .build();
+    }
+
+    private LocalDate getLastTransactionDate(List<Transaction> transactions) {
+        return CollectionUtils.isEmpty(transactions)
+                ? null
+                : transactions.stream().max(Comparator.comparing(Transaction::getDate)).get().getDate();
     }
 
 }

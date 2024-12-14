@@ -12,5 +12,5 @@ public interface ProjectService extends AbstractService<Project> {
 
     List<Project> getAllByUserId(Long userId);
 
-    Project getProjectByIdAndUserId(Long id, Long userId);
+    ProjectListItemDto getProjectByIdAndUserId(Long id, Long userId);
 }
