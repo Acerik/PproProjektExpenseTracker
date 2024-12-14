@@ -20,3 +20,10 @@ spring:
     contexts: dev,prod
     default-schema: public
     drop-first: false
+    parameters:
+      longType: bigint
+      stringType: varchar(255)
+      bigStringType: varchar(65000)
+      dateType: date
+      zoneDateTimeType: timestamp #Změnit pro postgress pro offsetdatetime
+      doubleType: double

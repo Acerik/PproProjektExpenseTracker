@@ -20,7 +20,7 @@ public class ProjectController {
 
     @GetMapping
     public String getProjects(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("projects", projectService.getAllByUserId(user.getId()));
+        model.addAttribute("projects", projectService.getProjectsListByUserId(user.getId()));
         return "project/list";
     }
 

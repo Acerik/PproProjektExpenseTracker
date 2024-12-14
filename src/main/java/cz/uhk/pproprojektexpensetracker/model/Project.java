@@ -1,10 +1,9 @@
 package cz.uhk.pproprojektexpensetracker.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -21,4 +20,7 @@ public class Project extends AbstractAuditingEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "project")
+    private List<Transaction> transactions;
 }

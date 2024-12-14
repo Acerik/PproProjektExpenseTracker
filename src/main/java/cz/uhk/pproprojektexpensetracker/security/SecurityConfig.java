@@ -31,6 +31,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/registration").permitAll()
                         .requestMatchers("/admin/**").hasRole(UserRole.ADMIN.getValue())
                         .anyRequest().authenticated()
                 ).headers(headers -> headers
@@ -43,7 +44,7 @@ public class SecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/login") // Custom login page
                         .loginProcessingUrl("/login") // Form submission URL
-                        .defaultSuccessUrl("/user", true)
+                        .defaultSuccessUrl("/project", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
