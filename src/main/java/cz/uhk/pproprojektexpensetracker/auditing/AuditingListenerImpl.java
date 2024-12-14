@@ -50,7 +50,7 @@ public class AuditingListenerImpl implements AuditingListener {
 
     private AuditLogEntityType getEntityType(Class<?> clazz) {
         for (AuditLogEntityType entityType : AuditLogEntityType.values()) {
-            if (clazz.getSimpleName().equals(entityType.name())) {
+            if (clazz.getSimpleName().equals(entityType.getValue())) {
                 return entityType;
             }
         }
