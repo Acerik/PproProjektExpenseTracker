@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -27,6 +28,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
@@ -39,6 +45,7 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/h2-console/**")
+                        .disable()
                 )
                 //.formLogin(Customizer.withDefaults())
                 .formLogin((form) -> form

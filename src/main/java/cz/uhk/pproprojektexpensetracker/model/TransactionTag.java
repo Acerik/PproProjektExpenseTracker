@@ -18,6 +18,9 @@ public class TransactionTag extends AbstractAuditingEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "color")
+    private String color = "#00AA00";
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

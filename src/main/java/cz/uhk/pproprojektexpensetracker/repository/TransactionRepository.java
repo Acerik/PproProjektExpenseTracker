@@ -9,4 +9,6 @@ import java.util.List;
 public interface TransactionRepository extends AbstractRepository<Transaction> {
 
     List<Transaction> findAllByProjectId(Long id);
+
+    List<Transaction> findAllByTransactionTagId(Long id);
 }
