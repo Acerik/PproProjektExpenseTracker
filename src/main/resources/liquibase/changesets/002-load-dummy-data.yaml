@@ -66,11 +66,33 @@ databaseChangeLog:
             file: ../data/project/project.csv
             primaryKey: id
         - loadData:
+            tableName: transaction_tag
+            columns:
+              - column:
+                  header: user_id
+                  name: user_id
+                  type: NUMERIC
+              - column:
+                  header: name
+                  name: name
+                  type: STRING
+              - column:
+                  header: color
+                  name: color
+                  type: STRING
+            relativeToChangelogFile: true
+            file: ../data/transaction/transaction_tag.csv
+            primaryKey: id
+        - loadData:
             tableName: transaction
             columns:
               - column:
                   header: project_id
                   name: project_id
+                  type: NUMERIC
+              - column:
+                  header: transaction_tag
+                  name: transaction_tag_id
                   type: NUMERIC
               - column:
                   header: title
