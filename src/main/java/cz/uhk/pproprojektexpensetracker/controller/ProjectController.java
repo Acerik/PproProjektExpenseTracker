@@ -38,15 +38,29 @@ public class ProjectController {
 
     @GetMapping("/new")
     public String newProjectGet(Model model, @AuthenticationPrincipal User user) {
-        return "project/new";
+        model.addAttribute("project", new Project());
+        return "project/editor";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editProjectGet(Model model, @AuthenticationPrincipal User user, @PathVariable Long id) {
+        Project project = projectService.findOne(id).orElse(null);
+        if (project == null || !user.getId().equals(project.getUser().getId())) {
+            return "redirect:/project";
+        }
+        model.addAttribute("project", project);
+        return "project/editor";
     }
 
     @PostMapping
-    public String createProject(@ModelAttribute Project project, @AuthenticationPrincipal User user) {
+    public String createProject(@ModelAttribute Project project, @AuthenticationPrincipal User user, Model model) {
         project.setUser(user);
-        Project saved = projectService.create(project);
+        Project saved = project.getId() == null
+                ? projectService.create(project)
+                : projectService.update(project);
         if (saved == null) {
-            return "project/new";
+            model.addAttribute("project", project);
+            return "project/editor";
         }
         return "redirect:/project";
     }
