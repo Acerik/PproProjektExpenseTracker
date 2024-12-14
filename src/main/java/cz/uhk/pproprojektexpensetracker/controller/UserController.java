@@ -18,7 +18,8 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
+    //todo secure it just for admin, rework redirecting after login etc
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("users", userService.getAll());
         return "user/list";

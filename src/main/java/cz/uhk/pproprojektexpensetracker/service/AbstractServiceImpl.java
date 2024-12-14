@@ -16,10 +16,10 @@ import java.util.Optional;
 public abstract class AbstractServiceImpl<T extends AbstractAuditingEntity> implements AbstractService<T> {
 
     @Autowired
-    private AbstractRepository<T> repository;
+    protected AbstractRepository<T> repository;
 
     @Autowired
-    private ApplicationEventPublisher eventPublisher;
+    protected ApplicationEventPublisher eventPublisher;
 
     @Override
     public Optional<T> findOne(Long id) {
