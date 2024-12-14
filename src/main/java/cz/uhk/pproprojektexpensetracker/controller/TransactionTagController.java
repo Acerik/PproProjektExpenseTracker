@@ -43,7 +43,7 @@ public class TransactionTagController {
         return "redirect:/transaction-tag";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String getEditTag(Model model, @AuthenticationPrincipal User user, @PathVariable Long id) {
         model.addAttribute("transactionTag", transactionTagService.findOne(id).orElse(null));
         return "transaction/tag/editor";
