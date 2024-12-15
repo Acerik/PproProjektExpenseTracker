@@ -1,11 +1,11 @@
 package cz.uhk.pproprojektexpensetracker.security;
 
-import cz.uhk.pproprojektexpensetracker.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +17,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -38,7 +39,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/registration").permitAll()
-                        .requestMatchers("/admin/**").hasRole(UserRole.ADMIN.getValue())
                         .anyRequest().authenticated()
                 ).headers(headers -> headers
                         .frameOptions().disable()

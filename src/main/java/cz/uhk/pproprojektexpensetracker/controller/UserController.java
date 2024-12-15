@@ -4,6 +4,7 @@ import cz.uhk.pproprojektexpensetracker.model.User;
 import cz.uhk.pproprojektexpensetracker.model.UserRole;
 import cz.uhk.pproprojektexpensetracker.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class UserController {
 
     private final UserService userService;
 
-    //todo secure it just for admin, rework redirecting after login etc
     @GetMapping
+    @Secured("ROLE_" + UserRole.Fields.ADMIN)
     public String index(Model model) {
         model.addAttribute("users", userService.getAll());
         return "user/list";

@@ -1,17 +1,17 @@
 package cz.uhk.pproprojektexpensetracker.model;
 
-public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+import lombok.Getter;
+import lombok.experimental.FieldNameConstants;
 
+@Getter
+@FieldNameConstants(onlyExplicitlyIncluded = true)
+public enum UserRole {
+    @FieldNameConstants.Include ADMIN("admin"),
+    @FieldNameConstants.Include USER("user");
 
     public final String value;
 
     UserRole(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 }
