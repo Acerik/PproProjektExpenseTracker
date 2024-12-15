@@ -44,7 +44,7 @@ public class ProjectController {
 
     @GetMapping("/{id}/edit")
     public String editProjectGet(Model model, @AuthenticationPrincipal User user, @PathVariable Long id) {
-        Project project = projectService.findOne(id).orElse(null);
+        Project project = projectService.findOneByIdAndUserId(id, user.getId()).orElse(null);
         if (project == null || !user.getId().equals(project.getUser().getId())) {
             return "redirect:/project";
         }
@@ -55,6 +55,11 @@ public class ProjectController {
     @PostMapping
     public String createProject(@ModelAttribute Project project, @AuthenticationPrincipal User user, Model model) {
         project.setUser(user);
+        if (project.getId() != null && projectService.findOneByIdAndUserId(project.getId(), user.getId()).isEmpty()) {
+            //todo add error cannot update this project
+            model.addAttribute("project", project);
+            return "project/editor";
+        }
         Project saved = project.getId() == null
                 ? projectService.create(project)
                 : projectService.update(project);
