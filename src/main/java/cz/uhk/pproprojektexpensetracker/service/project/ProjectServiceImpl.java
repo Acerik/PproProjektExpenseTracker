@@ -12,6 +12,8 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +30,12 @@ public class ProjectServiceImpl extends AbstractServiceImpl<Project> implements 
     @Override
     public List<Project> getAllByUserId(Long userId) {
         return ((ProjectRepository) repository).findAllByUserIdIs(userId);
+    }
+
+    @Override
+    public Optional<Project> findOneByIdAndUserId(Long id, Long userId) {
+        Optional<Project> project = findOne(id);
+        return project.filter(value -> Objects.equals(value.getUser().getId(), userId));
     }
 
     @Override
