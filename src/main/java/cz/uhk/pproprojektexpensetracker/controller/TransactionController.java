@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -74,7 +75,7 @@ public class TransactionController {
             model.addAttribute("transaction", transaction);
             model.addAttribute("tags", transactionTagService.getAllByUserId(user.getId()));
             model.addAttribute("projects", projectService.getProjectsListByUserId(user.getId()));
-            //todo add error cannot add transaction/update for this project
+            model.addAttribute("errors", List.of("Tento uživatel nemůže pracovat s tímto projektem."));
             return "transaction/editor";
         }
         Transaction saved = transaction.getId() == null
@@ -84,7 +85,7 @@ public class TransactionController {
             model.addAttribute("transaction", transaction);
             model.addAttribute("tags", transactionTagService.getAllByUserId(user.getId()));
             model.addAttribute("projects", projectService.getProjectsListByUserId(user.getId()));
-            //todo add error
+            model.addAttribute("errors", List.of("Došlo k chybě při ukládání."));
             return "transaction/editor";
         }
         return "redirect:/project/" + saved.getProject().getId();

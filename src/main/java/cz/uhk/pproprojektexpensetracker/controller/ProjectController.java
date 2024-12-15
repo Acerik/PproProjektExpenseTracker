@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/project")
 @RequiredArgsConstructor
@@ -56,7 +58,7 @@ public class ProjectController {
     public String createProject(@ModelAttribute Project project, @AuthenticationPrincipal User user, Model model) {
         project.setUser(user);
         if (project.getId() != null && projectService.findOneByIdAndUserId(project.getId(), user.getId()).isEmpty()) {
-            //todo add error cannot update this project
+            model.addAttribute("errors", List.of("Tento uživatel nemůže upravit tento projekt."));
             model.addAttribute("project", project);
             return "project/editor";
         }

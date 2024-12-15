@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -64,13 +65,14 @@ public class UserController {
     @PostMapping("/{id}/edit")
     public String userPostEdit(@PathVariable Long id, @ModelAttribute User user, Model model, @AuthenticationPrincipal User loggedUser) {
         if (!loggedUser.getId().equals(id)) {
-            //todo add error
+            model.addAttribute("errors", List.of("Nelze upravit jiného uživatele, nežli přihlášeného."));
             return "user/edit";
         }
         user.setId(id);
         User saved = userService.editUser(user, loggedUser);
         if (saved == null) {
-            //todo add error
+            model.addAttribute("errors", List.of("Došlo k chybě při ukládání."));
+
             return "user/edit";
         }
         return "redirect:/";

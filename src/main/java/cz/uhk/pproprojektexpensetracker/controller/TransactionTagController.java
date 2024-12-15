@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/transaction-tag")
 @RequiredArgsConstructor
@@ -39,8 +41,7 @@ public class TransactionTagController {
                 ? transactionTagService.create(transactionTag)
                 : transactionTagService.update(transactionTag);
         if (saved == null) {
-            //todo udělat obecně error jako objekt pro šablony + jako fragment
-            model.addAttribute("error", true);
+            model.addAttribute("errors", List.of("Došlo k chybě při ukládání."));
             model.addAttribute("transactionTag", transactionTag);
             return "transaction/tag/editor";
         }
@@ -60,8 +61,7 @@ public class TransactionTagController {
             transactionTagService.delete(id);
             return "redirect:/transaction-tag";
         }
-        //todo dodělat error
-        model.addAttribute("error", true);
-        return "redirect:/transaction-tag";
+        model.addAttribute("errors", List.of("Tento uživatel nemůže odebrat tento štítek."));
+        return "transaction/tag/list";
     }
 }
