@@ -15,5 +15,8 @@ public class GlobalControllerAdvice {
     public void addAttributes(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("isAdmin", user != null
                 && user.getUserRoles().contains(UserRole.ADMIN));
+        if (user != null) {
+            model.addAttribute("userId", user.getId());
+        }
     }
 }
