@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Seznam uživatelů</title>
+    <title>Seznam projektů</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
 </head>
 <body>
-
 <!-- Menu -->
 <nav th:insert="~{fragments/menu.html}"></nav>
 
@@ -19,36 +18,29 @@
     <div th:insert="~{fragments/error.html}"></div>
 
     <div class="d-flex justify-content-between align-items-center list-header">
-        <h2>Seznam uživatelů</h2>
-        <a class="btn btn-primary" th:href="@{/}">Zpět na hlavní stránku</a>
+        <h2>Seznam projektů</h2>
+        <a class="btn btn-primary" th:href="@{/project/new}">Přidat projekt</a>
     </div>
 
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>#</th>
-            <th>Uživatelské jméno</th>
-            <th>Email</th>
-            <th>Jméno</th>
-            <th>Příjmení</th>
-            <th>Role</th>
+            <th>Název</th>
+            <th>Utracená částka</th>
+            <th>Počet transakcí</th>
+            <th>Datum poslední transakce</th>
             <th>Akce</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user, iterStat : ${users}">
-            <td th:text="${iterStat.count}"></td>
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td>
-                <ul>
-                    <li th:each="role : ${user.userRoles}" th:text="${role}"></li>
-                </ul>
-            </td>
-            <td>
-                <a class="btn btn-info btn-sm" th:href="@{/user/{id}(id=${user.id})}">Detail</a>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.name}"></td>
+            <td th:text="${project.spentAmount} + ' Kč'"></td>
+            <td th:text="${project.sumOfTransactions}"></td>
+            <td th:text="${project.lastTransactionDate}"></td>
+            <td class="actions">
+                <a class="btn btn-sm btn-info" th:href="@{/project/{id}(id=${project.id})}">Detail</a>
+                <a class="btn btn-sm btn-warning" th:href="@{/project/{id}/edit(id=${project.id})}">Upravit</a>
             </td>
         </tr>
         </tbody>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Upravit uživatele</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu -->
+<nav th:insert="~{fragments/menu.html}"></nav>
+
+<div class="container">
+
+    <!-- Errors -->
+    <div th:insert="~{fragments/error.html}"></div>
+
+    <div class="header d-flex justify-content-between align-items-center">
+        <h1>Upravit Uživatele</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Upravit uživatele: <span th:text="${user.username}"></span></h5>
+            <form method="post" th:action="@{/user/{id}/edit(id=${id})}" th:object="${user}">
+                <!-- ID uživatele (skrytý) -->
+                <input name="id" th:field="*{id}"
+                       th:value="${user.id}" type="hidden"/>
+
+                <!-- First name -->
+                <div class="mb-3">
+                    <label class="form-label" for="firstName">Jméno</label>
+                    <input class="form-control" id="firstName" name="firstName" required
+                           th:field="*{firstName}" th:value="${user.firstName}"
+                           type="text">
+                </div>
+
+                <!-- Last name -->
+                <div class="mb-3">
+                    <label class="form-label" for="lastName">Příjmení</label>
+                    <input class="form-control" id="lastName" name="lastName" required
+                           th:field="*{lastName}"
+                           th:value="${user.lastName}"
+                           type="text">
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label" for="password">Heslo</label>
+                    <input class="form-control" id="password" name="password"
+                           th:field="*{password}"
+                           th:value="${user.password}" type="password">
+                    <div class="form-text">Pokud nechcete změnit heslo, nechte toto pole prázdné.</div>
+                </div>
+
+                <!-- Username (nelze upravit) -->
+                <div class="mb-3">
+                    <label class="form-label" for="username">Uživatelské jméno</label>
+                    <input class="form-control" disabled id="username" name="username" readonly
+                           th:value="${user.username}"
+                           type="text">
+                </div>
+
+                <!-- Email (nelze upravit) -->
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" disabled id="email" name="email" readonly th:value="${user.email}"
+                           type="email">
+                </div>
+
+                <!-- Submit -->
+                <button class="btn btn-primary" type="submit">Upravit uživatele</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

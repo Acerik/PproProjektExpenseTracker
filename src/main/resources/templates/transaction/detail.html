@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Detail transakce</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+    <style>
+        .container {
+            margin: 5% auto;
+            max-width: 600px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .tag-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu -->
+<nav th:insert="~{fragments/menu.html}"></nav>
+
+<div class="container">
+
+    <!-- Errors -->
+    <div th:insert="~{fragments/error.html}"></div>
+
+    <div class="d-flex justify-content-between align-items-center header">
+        <h2>Detail transakce</h2>
+        <a class="btn btn-secondary" th:href="@{/project/{id}(id=${transaction.project.id})}">Zpět</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${transaction.title}"></h5>
+
+            <p class="card-text">
+                <strong>Částka:</strong>
+                <span th:text="${transaction.amount} + ' Kč'"></span>
+            </p>
+
+            <p class="card-text">
+                <strong>Datum:</strong>
+                <span th:text="${transaction.date}"></span>
+            </p>
+
+            <p class="card-text">
+                <strong>Popis:</strong>
+                <span th:text="${transaction.description}"></span>
+            </p>
+
+            <p class="card-text">
+                <strong>Projekt:</strong>
+                <span th:text="${transaction.project.name}"></span>
+            </p>
+
+            <p class="card-text">
+                <strong>Štítek:</strong>
+                <span th:text="${transaction.transactionTag.name}"></span>
+                <span class="tag-color" th:style="'background-color:' + ${transaction.transactionTag.color}"></span>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Detail projektu</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .transaction-tag {
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- Menu -->
+<nav th:insert="~{fragments/menu.html}"></nav>
+
+<div class="container list-container">
+
+    <!-- Errors -->
+    <div th:insert="~{fragments/error.html}"></div>
+
+    <div class="d-flex justify-content-between align-items-center list-header">
+        <h2>Detail projektu: <span th:text="${project.name}"></span></h2>
+        <a class="btn btn-secondary" th:href="@{/project}">Zpět na seznam projektů</a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Informace o projektu</h5>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Název:</strong> <span th:text="${project.name}"></span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Utracená částka:</strong> <span th:text="${project.spentAmount} + ' Kč'"></span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Počet transakcí:</strong> <span th:text="${project.sumOfTransactions}"></span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Datum poslední transakce:</strong> <span th:text="${project.lastTransactionDate}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Transaction List -->
+    <div class="d-flex justify-content-between align-items-center list-header">
+        <h3>Seznam transakcí</h3>
+        <a class="btn btn-primary" th:href="@{/transaction/project/{id}/new(id=${project.id})}">
+            Přidat transakci
+        </a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Titulek</th>
+            <th>Popis</th>
+            <th>Částka</th>
+            <th>Štítek</th>
+            <th>Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.date}"></td>
+            <td th:text="${transaction.title}"></td>
+            <td th:text="${transaction.description}"></td>
+            <td th:text="${transaction.amount} + ' Kč'"></td>
+            <td>
+                        <span class="transaction-tag"
+                              th:style="'background-color: ' + ${transaction.transactionTag.color}"
+                              th:text="${transaction.transactionTag.name}"></span>
+            </td>
+            <td class="actions">
+                <a class="btn btn-sm btn-info" th:href="@{/transaction/{id}(id=${transaction.id})}">Detail</a>
+                <a class="btn btn-sm btn-warning" th:href="@{/transaction/{id}/edit(id=${transaction.id})}">Upravit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<!--/*@thymesVar id="errors" type="java.util.List<java.lang.String>"*/-->
+<div class="alert alert-danger text-center mt-3" role="alert" th:if="${errors}">
+    <p th:each="error : ${errors}" th:text="${error}"></p>
+</div>

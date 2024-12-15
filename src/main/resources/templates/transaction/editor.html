@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title th:text="${transaction != null && transaction.id != null} ? 'Editovat transakci' : 'Vytvořit novou transakci'"></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+    <style>
+        .form-container {
+            margin: 5% auto;
+            max-width: 600px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu -->
+<nav th:insert="~{fragments/menu.html}"></nav>
+
+<div class="container form-container">
+
+    <!-- Errors -->
+    <div th:insert="~{fragments/error.html}"></div>
+
+    <div class="d-flex justify-content-between align-items-center header">
+        <h2 th:text="${transaction != null && transaction.id != null} ? 'Editovat transakci' : 'Vytvořit novou transakci'"></h2>
+        <a class="btn btn-secondary" th:href="@{/project/{id}(id=${transaction.project.id})}">Zpět</a>
+    </div>
+
+    <form method="post" th:action="@{/transaction}">
+        <input th:field="*{id}" th:if="${transaction != null && transaction.id != null}" type="hidden">
+
+        <div class="mb-3">
+            <label class="form-label" for="title">Název</label>
+            <input class="form-control" id="title" name="title" required
+                   th:value="${transaction != null && transaction.id != null} ? ${transaction.title} : ''" type="text">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="amount">Částka</label>
+            <input class="form-control" id="amount" min="1" name="amount" required step="0.01"
+                   th:value="${transaction != null && transaction.id != null} ? ${transaction.amount} : ''"
+                   type="number">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="date">Datum</label>
+            <input class="form-control" id="date" name="date" required
+                   th:value="${transaction != null} ? ${transaction.date} : ''" type="date">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="description">Popis</label>
+            <textarea class="form-control" id="description" name="description" rows="3"
+                      th:text="${transaction != null && transaction.id != null} ? ${transaction.description} : ''"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="transactionTag">Štítek</label>
+            <select class="form-select" id="transactionTag" name="transactionTag" required>
+                <option disabled selected th:if="${transaction == null || transaction.id == null}" value="">
+                    Vyberte štítek
+                </option>
+                <option th:each="tag : ${tags}"
+                        th:selected="${transaction != null} ? (transaction.transactionTag != null and transaction.transactionTag.id == tag.id) : false"
+                        th:text="${tag.name}"
+                        th:value="${tag.id}">
+                </option>
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="project">Projekt</label>
+            <select class="form-select" id="project" name="project" required>
+                <option disabled selected th:if="${transaction == null}" value="">Vyberte projekt</option>
+                <option th:each="proj : ${projects}"
+                        th:selected="${transaction != null && transaction.project != null && transaction.project.id == proj.id}"
+                        th:text="${proj.name}"
+                        th:value="${proj.id}">
+                </option>
+            </select>
+
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            <span th:text="${transaction.id != null} ? 'Uložit změny' : 'Vytvořit transakci'"></span>
+        </button>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

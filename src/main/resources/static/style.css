@@ -1,0 +1,17 @@
+
+body {
+    background-color: #f8f9fa;
+}
+
+.list-container {
+    margin: 5% auto;
+    max-width: 1000px;
+}
+
+.list-header {
+    margin-bottom: 20px;
+}
+
+.actions {
+    white-space: nowrap;
+}

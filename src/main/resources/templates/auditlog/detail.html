@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Audit Log Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu -->
+<nav th:insert="~{fragments/menu.html}"></nav>
+
+<div class="container">
+    <!-- Errors -->
+    <div th:insert="~{fragments/error.html}"></div>
+    <div class="header d-flex justify-content-between align-items-center">
+        <h1>Detail Audit Log</h1>
+        <a class="btn btn-secondary" th:href="@{/audit-log}">Zpět na seznam</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Audit Log ID: <span th:text="${auditLog.id}"></span></h5>
+            <p class="card-text">
+                <strong>Entity ID:</strong> <span th:text="${auditLog.entityId}"></span><br>
+                <strong>Event Type:</strong> <span th:text="${auditLog.auditLogEventType}"></span><br>
+                <strong>Entity Type:</strong> <span th:text="${auditLog.auditLogEntityType}"></span><br>
+                <strong>Created By:</strong>
+                <span th:if="${auditLog.userCreatedBy != null}"
+                      th:text="${auditLog.userCreatedBy.firstName} + ' ' + ${auditLog.userCreatedBy.lastName} + '(id=' + ${auditLog.createdBy} + ')'"></span>
+                <span th:if="${auditLog.userCreatedBy == null}" th:text="'id='+${auditLog.createdBy}"></span><br>
+                <strong>Created At:</strong> <span
+                    th:text="${#temporals.format(auditLog.createdAt, 'dd.MM.yyyy HH:mm:ss')}"></span>
+            </p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Entity JSON</h5>
+            <pre style="background-color: #f1f1f1; padding: 10px; border-radius: 5px;" th:text="${formattedJson}"></pre>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
