@@ -23,7 +23,7 @@ spring:
   liquibase:
     change-log: classpath:liquibase/changelog-main.yaml
     enabled: true
-    contexts: dev,prod
+    contexts: dev
     default-schema: public
     drop-first: false
     parameters:

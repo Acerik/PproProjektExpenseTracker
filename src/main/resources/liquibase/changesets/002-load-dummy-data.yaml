@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 002-load-dummy-data
       author: matejvana
+      context: dev
       changes:
         - loadData:
             tableName: user_details
@@ -113,3 +114,56 @@ databaseChangeLog:
             relativeToChangelogFile: true
             file: ../data/transaction/transaction.csv
             primaryKey: id
+  - changeSet:
+      id: 002-load-prod-data
+      author: matejvana
+      context: prod
+      changes:
+        - loadData:
+            tableName: user_details
+            columns:
+              - column:
+                  header: username
+                  name: username
+                  type: STRING
+              - column:
+                  header: password
+                  name: password
+                  type: STRING
+              - column:
+                  header: first_name
+                  name: first_name
+                  type: STRING
+              - column:
+                  header: last_name
+                  name: last_name
+                  type: STRING
+              - column:
+                  header: email
+                  name: email
+                  type: STRING
+              - column:
+                  header: created_by
+                  name: created_by
+                  type: NUMERIC
+              - column:
+                  header: created_at
+                  name: created_at
+                  type: DATE
+            relativeToChangelogFile: true
+            file: ../data/user/users_prod.csv
+            primaryKey: id
+        - loadData:
+            tableName: user_details_role
+            columns:
+              - column:
+                  header: user_id
+                  name: user_id
+                  type: NUMERIC
+              - column:
+                  header: role
+                  name: user_role
+                  type: STRING
+            relativeToChangelogFile: true
+            file: ../data/user/user_role_prod.csv
+            primaryKey: user_id

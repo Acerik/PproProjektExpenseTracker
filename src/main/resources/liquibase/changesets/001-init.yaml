@@ -201,25 +201,3 @@ databaseChangeLog:
                     foreignKey: true
                     foreignKeyName: fk_transaction_transaction_tag_id
                     references: transaction_tag(id)
-
-        - createTable:
-            tableName: template
-            columns:
-              - column:
-                  name: id
-                  type: ${longType}
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: created_at
-                  type: ${zoneDateTimeType}
-              - column:
-                  name: created_by
-                  type: ${longType}
-              - column:
-                  name: last_modified_at
-                  type: ${zoneDateTimeType}
-              - column:
-                  name: last_modified_by
-                  type: ${longType}

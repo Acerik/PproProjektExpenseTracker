@@ -1,0 +1,18 @@
+#Nastavení pro lokální postgres
+
+#create database expensetracker;
+#create user tracker with password 'password';
+#grant all privileges on database expensetracker to tracker;
+#grant all on schema public to tracker
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/expensetracker
+    username: tracker
+    password: password
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    drop-first: false
+    contexts: prod
+    parameters:
+      zoneDateTimeType: TIMESTAMP WITH TIME ZONE
