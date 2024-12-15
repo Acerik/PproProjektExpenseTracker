@@ -31,6 +31,10 @@ public class TransactionTagController {
     @PostMapping
     public String createNewTag(@ModelAttribute TransactionTag transactionTag, Model model, @AuthenticationPrincipal User user) {
         transactionTag.setUser(user);
+        if (transactionTag.getId() != null && transactionTagService.findOneByIdAndUserId(transactionTag.getId(), user.getId()).isEmpty()) {
+            //cannot update this tag with this user
+            return "redirect:/transaction-tag";
+        }
         TransactionTag saved = transactionTag.getId() == null
                 ? transactionTagService.create(transactionTag)
                 : transactionTagService.update(transactionTag);
@@ -45,13 +49,13 @@ public class TransactionTagController {
 
     @GetMapping("/{id}/edit")
     public String getEditTag(Model model, @AuthenticationPrincipal User user, @PathVariable Long id) {
-        model.addAttribute("transactionTag", transactionTagService.findOne(id).orElse(null));
+        model.addAttribute("transactionTag", transactionTagService.findOneByIdAndUserId(id, user.getId()).orElse(null));
         return "transaction/tag/editor";
     }
 
     @DeleteMapping("/{id}")
     public String deleteTag(Model model, @AuthenticationPrincipal User user, @PathVariable Long id) {
-        Boolean canBeDeleted = transactionTagService.isTagDeletable(id);
+        Boolean canBeDeleted = transactionTagService.isTagDeletable(id, user.getId());
         if (canBeDeleted) {
             transactionTagService.delete(id);
             return "redirect:/transaction-tag";
