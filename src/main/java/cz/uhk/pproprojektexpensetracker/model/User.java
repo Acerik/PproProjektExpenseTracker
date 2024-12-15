@@ -1,6 +1,7 @@
 package cz.uhk.pproprojektexpensetracker.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +23,7 @@ public class User extends AbstractAuditingEntity implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
