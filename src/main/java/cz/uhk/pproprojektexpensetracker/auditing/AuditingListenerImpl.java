@@ -1,7 +1,9 @@
 package cz.uhk.pproprojektexpensetracker.auditing;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import cz.uhk.pproprojektexpensetracker.auditing.enums.AuditLogEntityType;
 import cz.uhk.pproprojektexpensetracker.model.AuditLog;
 import cz.uhk.pproprojektexpensetracker.repository.AuditLogRepository;
@@ -32,6 +34,8 @@ public class AuditingListenerImpl implements AuditingListener {
     }
 
     private AuditLog createAuditLog(AuditEvent<?> event) {
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         String entityJson;
         try {
             entityJson = objectMapper.writeValueAsString(event.getEntity());

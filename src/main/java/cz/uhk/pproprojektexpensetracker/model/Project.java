@@ -1,5 +1,6 @@
 package cz.uhk.pproprojektexpensetracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Project extends AbstractAuditingEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "project")
     private List<Transaction> transactions;
 }

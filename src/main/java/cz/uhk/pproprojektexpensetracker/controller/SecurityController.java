@@ -21,6 +21,11 @@ public class SecurityController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    @GetMapping()
+    public String index(Model model) {
+        return "redirect:/project";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";
