@@ -11,6 +11,8 @@ public interface AbstractService<T extends AbstractAuditingEntity> {
 
     List<T> getAll();
 
+    List<T> findAllByIds(List<Long> ids);
+
     T create(T entity);
 
     T update(T entity);

@@ -64,4 +64,10 @@ public abstract class AbstractServiceImpl<T extends AbstractAuditingEntity> impl
         repository.deleteById(id);
         eventPublisher.publishEvent(new AuditEvent<>(entity, AuditLogEventType.DELETED));
     }
+
+    @Override
+    public List<T> findAllByIds(List<Long> ids) {
+        log.info("Find all ids {}", ids);
+        return repository.findAllById(ids);
+    }
 }

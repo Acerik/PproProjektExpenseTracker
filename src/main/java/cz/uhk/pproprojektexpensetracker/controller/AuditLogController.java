@@ -2,7 +2,7 @@ package cz.uhk.pproprojektexpensetracker.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import cz.uhk.pproprojektexpensetracker.model.AuditLog;
+import cz.uhk.pproprojektexpensetracker.dto.AuditLogDto;
 import cz.uhk.pproprojektexpensetracker.model.UserRole;
 import cz.uhk.pproprojektexpensetracker.service.auditlog.AuditLogService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class AuditLogController {
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        AuditLog auditLog = auditLogService.findById(id).orElse(null);
+        AuditLogDto auditLog = auditLogService.findById(id).orElse(null);
         if (auditLog == null) {
             return "redirect:/audit-log";
         }
