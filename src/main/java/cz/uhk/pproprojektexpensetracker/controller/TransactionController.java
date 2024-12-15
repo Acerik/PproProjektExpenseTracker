@@ -70,6 +70,13 @@ public class TransactionController {
     @PostMapping
     public String createTransaction(@ModelAttribute Transaction transaction, Model model, @AuthenticationPrincipal User user) {
         //check if user can create transaction for that project
+        if (projectService.findOneByIdAndUserId(transaction.getProject().getId(), user.getId()).isEmpty()) {
+            model.addAttribute("transaction", transaction);
+            model.addAttribute("tags", transactionTagService.getAllByUserId(user.getId()));
+            model.addAttribute("projects", projectService.getProjectsListByUserId(user.getId()));
+            //todo add error cannot add transaction/update for this project
+            return "transaction/editor";
+        }
         Transaction saved = transaction.getId() == null
                 ? transactionService.create(transaction)
                 : transactionService.update(transaction);
